@@ -169,7 +169,7 @@ class DataComposer: Composer {
             state.isLoading = true
             return .run { effect in
                 let data = try await api.fetchData() // Assume api.fetchData() is an async method
-				effect.onNext(.send(.dataLoaded(data)))
+		effect.onNext(.send(.dataLoaded(data)))
             } catch: { error in
                 return .send(.fetchFailed(error))
             }
@@ -214,8 +214,8 @@ class ObservableDataComposer: Composer {
             state.isLoading = true
             let dataObservable = api.fetchDataObservable() // Assume this returns Observable<String>
             return .run(dataObservable.map {
-				Action.dataLoaded($0)
-			}) { error in
+		Action.dataLoaded($0)
+	    }) { error in
                 return .send(.fetchFailed(error))
             }
         case .dataLoaded(let data):
@@ -253,12 +253,12 @@ class TimerComposer: Composer {
     @ComposableState var state = State()
     var action = PublishRelay<Action>()
     var disposeBag = DisposeBag()
-	var timerDisposeBag = DisposeBag()
+    var timerDisposeBag = DisposeBag()
 
     func reducer(_ state: inout State, _ action: Action) -> Observable<Effect<Action>> {
         switch action {
         case .startTimer:
-            return .timer(.send(.tick), dueTime: .seconds(1), period: .seconds(2), disposeBag: timerD)
+            return .timer(.send(.tick), dueTime: .seconds(1), period: .seconds(2), disposeBag: timerDisposeBag)
         case .tick:
             state.count += 1
             return .none
@@ -284,11 +284,12 @@ class IntervalComposer: Composer {
     @ComposableState var state = State()
     var action = PublishRelay<Action>()
     var disposeBag = DisposeBag()
+    var intervalDisposeBag = DisposeBag()
 
     func reducer(_ state: inout State, _ action: Action) -> Observable<Effect<Action>> {
         switch action {
         case .startCounting:
-            return .interval(.send(.increment), period: .seconds(1), disposeBag: disposeBag)
+            return .interval(.send(.increment), period: .seconds(1), disposeBag: intervalDisposeBag)
         case .increment:
             state.count += 1
             return .none
@@ -319,16 +320,17 @@ class StoppableTimerComposer: Composer {
     @ComposableState var state = State()
     var action = PublishRelay<Action>()
     var disposeBag = DisposeBag()
+    var timerDisposeBag = DisposeBag()
 
     func reducer(_ state: inout State, _ action: Action) -> Observable<Effect<Action>> {
         switch action {
         case .startTimer:
             guard !state.isRunning else { return .none }
             state.isRunning = true
-            return .timer(.send(.tick), dueTime: .seconds(0), period: .seconds(1), disposeBag: disposeBag)
+            return .timer(.send(.tick), dueTime: .seconds(0), period: .seconds(1), disposeBag: timerDisposeBag)
         case .stopTimer:
             state.isRunning = false
-            return .cancel(&disposeBag)
+            return .cancel(&timerDisposeBag)
         case .tick:
             state.count += 1
             return .none
