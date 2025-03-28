@@ -1,6 +1,6 @@
 //
 //  Effect.swift
-//  Tamagotchi
+//  RxCompose
 //
 //  Created by 김도형 on 2/21/25.
 //

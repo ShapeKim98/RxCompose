@@ -1,6 +1,6 @@
 //
 //  Observable+Effect.swift
-//  RxComposableKit
+//  RxCompose
 //
 //  Created by 김도형 on 3/27/25.
 //
