@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 @MainActor
-public protocol Composer: AnyObject, ReactiveCompatible {
+public protocol Composer: AnyObject {
     associatedtype Action
     associatedtype State
     
@@ -43,5 +43,3 @@ extension Composer {
             .disposed(by: disposeBag)
     }
 }
-
-

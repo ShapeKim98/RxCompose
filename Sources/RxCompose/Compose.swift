@@ -11,7 +11,7 @@ import RxSwift
 
 @MainActor
 @propertyWrapper
-public struct Compose<C: Composer>: ReactiveCompatible {
+public struct Compose<C: Composer> {
     private var composer: C
     
     public init(wrappedValue: C) {
