@@ -1,6 +1,5 @@
 
 # RxCompose
-[![CI Status](https://img.shields.io/travis/ShapeKim98/RxCompose.svg?style=flat)](https://travis-ci.org/ShapeKim98/RxCompose)
 [![Version](https://img.shields.io/cocoapods/v/RxCompose.svg?style=flat)](https://cocoapods.org/pods/RxCompose)
 [![License](https://img.shields.io/cocoapods/l/RxCompose.svg?style=flat)](https://cocoapods.org/pods/RxCompose)
 [![Platform](https://img.shields.io/cocoapods/p/RxCompose.svg?style=flat)](https://cocoapods.org/pods/RxCompose)
