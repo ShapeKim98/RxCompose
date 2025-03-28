@@ -1,6 +1,6 @@
 //
-//  Composable.swift
-//  Tamagotchi
+//  Composer.swift
+//  RxCompose
 //
 //  Created by 김도형 on 2/23/25.
 //
@@ -11,11 +11,11 @@ import RxSwift
 import RxCocoa
 
 @MainActor
-public protocol Composable: AnyObject, ReactiveCompatible {
+public protocol Composer: AnyObject, ReactiveCompatible {
     associatedtype Action
     associatedtype State
     
-    var state: State { get set }
+    var state: State { get }
     var action: PublishRelay<Action> { get }
     var disposeBag: DisposeBag { get }
     
@@ -24,7 +24,12 @@ public protocol Composable: AnyObject, ReactiveCompatible {
     func send(_ action: Action)
 }
 
-public extension Composable {
+public extension Composer {
+    internal(set) var state: State {
+        get { self.state }
+        set { }
+    }
+    
     func bindAction() {
         action
             .observe(on: MainScheduler.asyncInstance)
@@ -50,7 +55,7 @@ public extension Composable {
 }
 
 @MainActor
-extension Reactive where Base: Composable {
+public extension Reactive where Base: Composer {
     var send: Binder<Base.Action> {
         Binder(base) { base, action in
             base.action.accept(action)
