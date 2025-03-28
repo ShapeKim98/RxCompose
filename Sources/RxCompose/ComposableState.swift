@@ -11,23 +11,23 @@ import RxSwift
 import RxCocoa
 
 @propertyWrapper
-struct ComposableState<State> {
+public struct ComposableState<State> {
     private let relay: BehaviorRelay<State>
     
-    init(wrappedValue: State) {
+    public init(wrappedValue: State) {
         relay = BehaviorRelay(value: wrappedValue)
     }
     
-    var wrappedValue: State {
+    public var wrappedValue: State {
         get { relay.value }
         set { relay.accept(newValue) }
     }
     
-    var projectedValue: ComposableState<State> { self }
+    public var projectedValue: ComposableState<State> { self }
     
-    var observable: Driver<State> { relay.asDriver() }
+    public var observable: Driver<State> { relay.asDriver() }
     
-    func present<Result>(
+    public func present<Result>(
         _ selector: @escaping (State) -> PresentState<Result>
     ) -> Driver<Result> {
         observable

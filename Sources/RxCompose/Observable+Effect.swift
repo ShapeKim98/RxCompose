@@ -23,6 +23,11 @@ public extension Observable where Element: EffectProtocol {
         }
     }
     
+    static func cancel(_ disposeBag: inout DisposeBag) -> Observable<Element> {
+        disposeBag = DisposeBag()
+        return .none
+    }
+    
     static func timer(
         _ effect: Observable<Element>,
         dueTime: RxTimeInterval = .seconds(0),
@@ -95,7 +100,7 @@ public extension Observable where Element: EffectProtocol {
         _ operation: sending @escaping ( _ effect: AnyObserver<Element>) async throws -> Void,
         catch onError: ((Error) -> Element)? = nil
     ) -> Observable<Element> {
-        return .create { observable in
+        return Observable.create { observable in
             let task = Task(priority: priority) {
                 do {
                     try await operation(observable)
