@@ -124,12 +124,12 @@ class ViewController: UIViewController, Composable {
 
         // Bind buttons to actions
         incrementButton.rx.tap
-            .map { Composer.Action.increment }
+            .map { Action.increment }
             .bind(to: composer.action)
             .disposed(by: disposeBag)
 
         decrementButton.rx.tap
-            .map { Composer.Action.decrement }
+            .map { Action.decrement }
             .bind(to: composer.action)
             .disposed(by: disposeBag)
     }
@@ -361,12 +361,12 @@ class TimerViewController: UIViewController, Composable {
             .disposed(by: disposeBag)
 
         startButton.rx.tap
-            .map { Composer.Action.startTimer }
+            .map { Action.startTimer }
             .bind(to: composer.action)
             .disposed(by: disposeBag)
 
         stopButton.rx.tap
-            .map { Composer.Action.stopTimer }
+            .map { Action.stopTimer }
             .bind(to: composer.action)
             .disposed(by: disposeBag)
     }
